@@ -1,7 +1,6 @@
-{% extends "app/base.html" %}
-
+{% extends 'app/base.html' %}
 {% load static %}
-{% block banner_slider %}
+{% block cart_content %}
 <div id="carouselExampleDark" class="carousel carousel-dark slide">
     <div class="carousel-indicators">
       <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -12,7 +11,7 @@
     </div>
     <div class="carousel-inner">
       <div class="carousel-item active" data-bs-interval="10000">
-        <img src={% static "app/images/banner/Banner1.jpg" %} style="width:100%" class="d-block w-100 "alt="sua b1" height='580'> 
+        <img src={% static "app/images/banner/Banner6.jpg" %} style="width:100%" class="d-block w-100 "alt="sua b1" height='580'> 
       </div>
       <div class="carousel-item" data-bs-interval="2000">
         <img src={% static "app/images/banner/Banner2.jpg" %} style="width:100%" class="d-block w-100 "alt="sua b1" height='580'>
@@ -36,29 +35,35 @@
       <span class="visually-hidden">Next</span>
     </button>
   </div>
-{% endblock banner_slider %}
-{% block main-content %}
-<div class="container my-5">
-  <header class="mb-4" style="position: relative; left: -200px">
-    <h2>Sản phẩm </h2>
-  </header>
-<div class="row" style="width:100%">
-  {%for product in products %}
-<div class="col-lg-4 mb-4">
-    <div class="box-element product h-100 h-flex flex-column">
-      <img class="img-fluid" src="{{product.ImageURL}}" alt="{{product.name}}" style="object-fit: cover; height: 300px;width:100%;">
-      <h6 class="mt-auto"><strong>{{product.name}}</strong></h6>
-      <p class="card-text"><strong>{{product.price}} VND</strong></p>
-      <div class="mt-auto">
-        <button data-product={{product.id}} data-action= "add" class="btn btn btn-primary shadow-0 me-1 add-btn update-cart " style="width: 100%">Thêm vào giỏ hàng</button>
-        <a class="btn btn-outline-success " href="{% url 'detail' %}?id={{product.id}}" style="width: 100%"> Xem </a>
+    <div class="d-flex justify-content-center mt-5">
+        <form class="d-flex" style="width: 40%" role="search" method= 'POST' action ="{% url 'search'%}">
+            {% csrf_token %}
+            <input class="form-control me-2 fs-3" type="search" placeholder="Nhập tên sản phẩm" aria-label="Search" name = "searched">
+            <button type="submit" class="btn btn-primary shadow-0 fs-5" style="height: 50px; width: 60px;">
+              <i class="fas fa-search"></i>
+            </button>
+          </form>
+    </div>
+    <div class="container my-5">
+      <header class="mb-4" style="position: relative; left: -200px">
+        <h2>Sản phẩm </h2>
+      </header>
+    <div class="row" style="width:100%">
+      {%for product in products %}
+    <div class="col-lg-4 mb-4">
+        <div class="box-element product h-100 h-flex flex-column">
+          <img class="img-fluid" src="{{product.ImageURL}}" alt="{{product.name}}" style="object-fit: cover; height: 300px;width:100%;">
+          <h6 class="mt-auto"><strong>{{product.name}}</strong></h6>
+          <p class="card-text"><strong>{{product.price}} VND</strong></p>
+          <div class="mt-auto">
+            <button data-product={{product.id}} data-action= "add" class="btn btn btn-primary shadow-0 me-1 add-btn update-cart " style="width: 100%">Thêm vào giỏ hàng</button>
+            <a class="btn btn-outline-success " href="{% url 'detail' %}?id={{product.id}}" style="width: 100%"> Xem </a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
       </div>
     </div>
-  </div>
-  {% endfor %}
-  </div>
-</div>
-</div> 
-<br/><br/><br/><br/>
-{% endblock main-content %} 
-
+    </div> 
+    <br/><br/><br/><br/>
+{% endblock cart_content %}
